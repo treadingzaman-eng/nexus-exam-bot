@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS EXAM BOT</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ padding:18px;
+ background:#070a12;
+ color:#eaf2ff;
+ font-family:Arial,sans-serif;
+}
+.app{max-width:480px;margin:auto}
+header,.card{
+ background:#101827;
+ border:1px solid #263750;
+ border-radius:16px;
+ padding:18px;
+ margin-bottom:15px;
+}
+h1{color:#35e6c2;margin:0}
+.subtitle{color:#91a2ba;font-size:12px}
+.status{color:#35e6c2;font-weight:bold}
+input,textarea{
+ width:100%;
+ padding:13px;
+ margin-top:10px;
+ border-radius:10px;
+ border:1px solid #30425e;
+ background:#080e19;
+ color:white;
+ outline:none;
+}
+textarea{min-height:90px;resize:vertical}
+button{
+ width:100%;
+ padding:14px;
+ border:0;
+ border-radius:10px;
+ margin-top:10px;
+ background:#35e6c2;
+ color:#06120f;
+ font-weight:bold;
+ cursor:pointer;
+}
+.secondary{background:#263750;color:white}
+.danger{background:#ff526b;color:white}
+.result{
+ background:#080e19;
+ border-radius:10px;
+ padding:13px;
+ margin-top:12px;
+ white-space:pre-wrap;
+ font-size:13px;
+}
+.progress{
+ height:8px;
+ background:#263750;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:12px;
+}
+.bar{
+ height:100%;
+ width:0%;
+ background:#35e6c2;
+ transition:.3s;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+<h1>NEXUS EXAM BOT</h1>
+<p class="subtitle">ARTIFICIAL INTELLIGENCE • FORMS TESTER</p>
+</header>
+
+<div class="card">
+<h3>CONTROL CENTER</h3>
+<p>Status: <span class="status" id="status">READY</span></p>
+
+<input id="formUrl"
+placeholder="Masukkan link Google Forms">
+
+<button onclick="openForm()">
+BUKA GOOGLE FORMS
+</button>
+</div>
+
+<div class="card">
+<h3>QUESTION SCANNER</h3>
+
+<textarea id="question"
+placeholder="Masukkan pertanyaan..."></textarea>
+
+<textarea id="options"
+placeholder="A. Jawaban pertama&#10;B. Jawaban kedua&#10;C. Jawaban ketiga&#10;D. Jawaban keempat"></textarea>
+
+<button onclick="analyze()">
+ANALISIS PERTANYAAN
+</button>
+
+<div class="result" id="result">
+Menunggu pertanyaan...
+</div>
+</div>
+
+<div class="card">
+<h3>BOT CONTROL</h3>
+
+<p>Progres: <span id="percent">0%</span></p>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<button onclick="start()">START BOT</button>
+<button class="danger" onclick="stop()">STOP BOT</button>
+
+<div class="result" id="log">
+NEXUS SYSTEM INITIALIZED.
+</div>
+</div>
+
+<div class="card">
+<h3>SYSTEM INFORMATION</h3>
+<p>Platform: Android</p>
+<p>Interface: NEXUS EXAM BOT</p>
+<p>Mode: Backend belum terhubung</p>
+</div>
+
+</div>
+
+<script>
+let running=false;
+
+function log(message){
+ document.getElementById("log").textContent=
+ message;
+}
+
+function openForm(){
+ const url=document.getElementById("formUrl").value.trim();
+
+ if(!url.startsWith("https://docs.google.com/forms/")){
+  alert("Masukkan link Google Forms yang benar.");
+  return;
+ }
+
+ window.open(url,"_blank");
+ log("Google Forms dibuka.");
+}
+
+function analyze(){
+ const q=document.getElementById("question").value.trim();
+ const o=document.getElementById("options").value.trim();
+
+ if(!q||!o){
+  alert("Masukkan pertanyaan dan pilihan jawaban.");
+  return;
+ }
+
+ document.getElementById("result").textContent=
+ "Pertanyaan berhasil dimasukkan.\n\n"+
+ "Pertanyaan:\n"+q+
+ "\n\nPilihan:\n"+o+
+ "\n\nAI belum aktif. Backend AI perlu dihubungkan.";
+ log("Pertanyaan berhasil dimuat.");
+}
+
+function start(){
+ running=true;
+ document.getElementById("status").textContent="READY";
+ log("Sistem siap. Menunggu koneksi backend AI.");
+}
+
+function stop(){
+ running=false;
+ document.getElementById("status").textContent="STOPPED";
+ log("NEXUS dihentikan.");
+}
+</script>
+
+</body>
+</html>
